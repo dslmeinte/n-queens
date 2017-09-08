@@ -1,7 +1,9 @@
 package com.dslmeinte.nqueens;
 
 import static com.dslmeinte.nqueens.BitMask.bits;
+import static com.dslmeinte.nqueens.BitMask.firstOneBit;
 import static com.dslmeinte.nqueens.BitMask.firstZeroBit;
+import static com.dslmeinte.nqueens.BitMask.ones;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -32,13 +34,32 @@ public class BitMaskTest {
 
     @Test
     public void test_toString() {
-        assertEquals("", BitMask.toString(0, 0));
         assertEquals("0", BitMask.toString(0, 1));
         assertEquals("1", BitMask.toString(1, 1));
         assertEquals("00", BitMask.toString(0, 2));
         assertEquals("10", BitMask.toString(1, 2));
         assertEquals("01", BitMask.toString(2, 2));
         assertEquals("11", BitMask.toString(3, 2));
+    }
+
+    @Test
+    public void test_ones() {
+        for (int i = 0; i < 32; i++) {
+            assertEquals(0, ones(i, i));
+        }
+        assertEquals(bits[0], ones(0, 1));
+        assertEquals(bits[1] + bits[2], ones(1, 3));
+        assertEquals(Integer.MAX_VALUE, ones(0, 31));
+    }
+
+    @Test
+    public void test_firstOneBit() {
+        assertEquals(-1, firstOneBit(0, 31));
+        assertEquals(0, firstOneBit(1, 31));
+        assertEquals(2, firstOneBit(bits[2] + bits[30], 31));
+        for (int i = 0; i < 31; i++) {
+            assertEquals(i, firstOneBit(bits[i], 31));
+        }
     }
 
 }
