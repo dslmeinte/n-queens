@@ -69,7 +69,7 @@ public class Chessboard {
      * @return the legal column for the queen {@code k + 1} which isn't already considered.
      */
     int nextLegalColumn() {
-        return BitMask.firstZeroBit(coverageBitMask[k + 1], m, queenColumn[k + 1]);
+        return BitMask.firstZeroBit(coverageBitMask[k + 1], m, queenColumn[k + 1] + 1);
     }
 
     /**

@@ -21,13 +21,13 @@ public class BitMaskTest {
     @Test
     public void test_firstZeroBit() {
         int nrBits = 2;
-        assertEquals(0, firstZeroBit(0, nrBits, -1));
-        assertEquals(1, firstZeroBit(0, nrBits, 0));
-        assertEquals(-1, firstZeroBit(0, nrBits, 1));
-        assertEquals(0, firstZeroBit(2, nrBits, -1));
-        assertEquals(-1, firstZeroBit(2, nrBits, 0));
-        assertEquals(-1, firstZeroBit(3, nrBits, -1));
-        assertEquals(2, firstZeroBit(3, 8, -1));
+        assertEquals(0, firstZeroBit(0, nrBits, 0));
+        assertEquals(1, firstZeroBit(0, nrBits, 1));
+        assertEquals(-1, firstZeroBit(0, nrBits, 2));
+        assertEquals(0, firstZeroBit(2, nrBits, 0));
+        assertEquals(-1, firstZeroBit(2, nrBits, 1));
+        assertEquals(-1, firstZeroBit(3, nrBits, 0));
+        assertEquals(2, firstZeroBit(3, 8, 0));
     }
 
     @Test

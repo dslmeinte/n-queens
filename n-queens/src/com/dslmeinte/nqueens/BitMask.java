@@ -20,21 +20,28 @@ public class BitMask {
     }
 
     /**
-     * @return the index of the first zero bit in the @param mask (of size @param nrBits bits) with index > @param fromBit.
+     * @return the index of the first zero bit in the @param mask (of size @param nrBits bits) with index >= @param fromBit.
      */
     public static int firstZeroBit(int mask, int nrBits, int fromBit) {
-        int bitNr = fromBit + 1;
-        mask = mask >> bitNr;
-        while (bitNr < nrBits) {
-            if (mask%2 == 0) {
-                return bitNr;
-            }
-            mask >>= 1;
-            bitNr++;
-        }
-        return -1;
+    		int shiftIndex = firstOneBit(~(mask >> fromBit), nrBits - fromBit);
+    		return shiftIndex == -1 ? -1 : (shiftIndex + fromBit);
     }
-    // TODO  this can be made more efficient using a binary search that uses pre-computed bit masks
+
+    /**
+     * @return the index of the first one bit in the @param mask (of size @param nrBits bits).
+     */
+    private static int firstOneBit(int mask, int nrBits) {
+    		int bitNr = 0;
+    		while (bitNr < nrBits) {
+    			if (mask%2 != 0) {	// bit-inverted masks can be negative => test for == -1 || == 0 <==> != 0
+    				return bitNr;
+    			}
+    			mask >>= 1;
+    			bitNr++;
+    		}
+    		return -1;
+    }
+    // TODO  this can be made more efficient using a binary search
 
     /**
      * @return the representation of the bit mask, with the LSB to the left.
