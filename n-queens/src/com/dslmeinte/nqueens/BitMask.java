@@ -47,15 +47,20 @@ public class BitMask {
      *         nrBits bits).
      */
     /* package-visible for testing */ static int firstOneBit(int mask, int nrBits) {
-        int bitNr = 0;
-        while (bitNr < nrBits) {
-            if (mask % 2 != 0) { // bit-inverted masks can be negative => test for == -1 || == 0 <==> != 0
-                return bitNr;
-            }
-            mask >>= 1;
-            bitNr++;
+        if (mask == 0 || nrBits <= 0) {
+            return -1;
         }
-        return -1;
+        int low = 0;
+        int high = nrBits;
+        while ((high - low) > 1) {
+            int mid = (low + high) >> 1;
+            if ((ones(low, mid) & mask) > 0) {
+                high = mid;
+            } else {
+                low = mid;
+            }
+        }
+        return low;
     }
 
     /**
